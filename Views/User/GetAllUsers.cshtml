@@ -1,0 +1,116 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "User List";
+   
+}
+<style>
+/*     .header {
+        position: sticky;
+        top: 0;
+        padding: 10px 16px;
+        background: #555;
+        color: #f1f1f1;
+    } */
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 280px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            padding: 10px 16px;
+            background: #555;
+            color: #f1f1f1;
+        }
+</style>
+@* <script>
+    $(document).ready(function () {
+        $('#btnSearch').click(function () {
+            alert('Hello')
+                  $.ajax({
+                      type: 'POST',
+                      contentType: "application/json; charset=utf-8",
+                      url: 'User/GetUser',
+                      data: "{'searchString':'" + $('#search-input').val() + "'}",
+                      async: false,
+                      success: function (response) {
+                          $('#showData').html(response)
+                      },
+                      error: function () { alert("error"); }
+                  });
+              });
+          });
+</script> *@
+@using (Html.BeginForm())  
+{
+<div style="text-align:left; height:30px" class="form-group col-md-12">@ViewData["Title"]</div>
+<div class="text-center row" style="border:solid 1px; border-radius: 5px">
+    <div style="text-align:left;" class="form-group col-md-12">Search >></div>
+    <div class="form-group col-md-12; height:15px;"></div>
+    <div class="form-group col-md-1">Name :</div>
+    <div class="form-group col-md-3">
+        @* <input type="text" id="SearchString" placeholder="Search..." class="form-control" /> *@
+            @Html.TextBox("SearchName", null, new { @class = "form-control", @placeholder = "Search..." })
+    </div>
+    <div class="form-group col-md-1">Email :</div>
+    <div class="form-group col-md-3">
+        <select name="SearchEmail" id="SearchEmail" asp-items="@(new SelectList(ViewBag.useremail,"Email","Email"))" class="form-control" style="cursor:pointer; appearance:button;" aria-labelledby="dropdownMenuButton">
+            <option value="">--Select--</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+            <input type="submit" id="btnSearch" class="btn btn-sm btn-primary" value="Search" />
+    </div>
+    <div class="form-group col-md-2"></div>
+    <div class="form-group col-md-10"></div>
+    <div class="form-group col-md-2">
+        <input type="submit" class="btn btn-sm btn-primary" id="btnAdd" value="Add" />
+    </div>
+    <div id="search-results" style="height:10px" class="row"></div>
+</div>
+<div class="row" style="height:10px;"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class=" table-responsive tableFixHead">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Name</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.UserName</td>
+                            <td>@user.Name</td>
+                            <td>@user.Email</td>
+                            <td>@user.Gender</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="@Url.Action("Edit","Staff",new {id=user.Id})">Edit</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","Staff",new {id=user.Id})">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+}

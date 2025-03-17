@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Dot_net_ModelViewController.props" />
+</Project>
